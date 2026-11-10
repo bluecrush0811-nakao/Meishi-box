@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#3a54d1">
+<title>名刺ボックス</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>名刺ボックス</h1>
+    <div class="topbar-actions">
+      <button id="btn-export" class="ghost" title="バックアップを書き出す">書き出し</button>
+      <label class="ghost button-like" title="バックアップを読み込む">
+        読み込み<input type="file" id="import-file" accept="application/json" hidden>
+      </label>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="名前・会社・タグなどで検索">
+      <select id="sort">
+        <option value="createdDesc">登録が新しい順</option>
+        <option value="createdAsc">登録が古い順</option>
+        <option value="nameAsc">名前順</option>
+        <option value="companyAsc">会社名順</option>
+      </select>
+    </div>
+    <div id="tag-filter" class="tag-filter"></div>
+    <p id="count" class="count"></p>
+    <ul id="card-list" class="card-list"></ul>
+    <div id="empty" class="empty" hidden>
+      <p>まだ名刺がありません。</p>
+      <p>右下の <strong>＋</strong> ボタンから名刺を撮影して登録しましょう。</p>
+    </div>
+  </main>
+
+  <!-- 撮影ボタン -->
+  <label class="fab" title="名刺を撮影して追加">
+    <span aria-hidden="true">＋</span>
+    <input type="file" id="capture" accept="image/*" capture="environment" hidden>
+  </label>
+
+  <!-- 編集ダイアログ -->
+  <dialog id="edit-dialog">
+    <form id="edit-form" method="dialog">
+      <h2 id="edit-title">名刺を登録</h2>
+
+      <div class="photo-area">
+        <img id="edit-front" alt="名刺(表)">
+        <div class="photo-buttons">
+          <label class="button-like ghost small">表を撮り直す<input type="file" id="retake-front" accept="image/*" capture="environment" hidden></label>
+          <label class="button-like ghost small">裏面を追加<input type="file" id="add-back" accept="image/*" capture="environment" hidden></label>
+          <button type="button" id="btn-rotate" class="ghost small">回転</button>
+          <button type="button" id="btn-ocr" class="ghost small">文字を読み取る</button>
+        </div>
+        <img id="edit-back" alt="名刺(裏)" hidden>
+        <p id="ocr-status" class="ocr-status" hidden></p>
+      </div>
+
+      <div class="fields">
+        <label>氏名<input name="name" autocomplete="off" required></label>
+        <label>ふりがな<input name="kana" autocomplete="off"></label>
+        <label>会社名<input name="company" autocomplete="off"></label>
+        <label>部署<input name="department" autocomplete="off"></label>
+        <label>役職<input name="title" autocomplete="off"></label>
+        <label>電話<input name="phone" type="tel" autocomplete="off"></label>
+        <label>携帯<input name="mobile" type="tel" autocomplete="off"></label>
+        <label>メール<input name="email" type="email" autocomplete="off"></label>
+        <label>Web<input name="url" type="url" autocomplete="off"></label>
+        <label class="wide">住所<input name="address" autocomplete="off"></label>
+        <label>交換日<input name="metOn" type="date"></label>
+        <label>タグ(カンマ区切り)<input name="tags" placeholder="例: 展示会, 取引先" autocomplete="off"></label>
+        <label class="wide">メモ<textarea name="memo" rows="3" placeholder="会った場所・話した内容など"></textarea></label>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" id="btn-cancel" class="ghost">キャンセル</button>
+        <button type="submit" id="btn-save">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 詳細ダイアログ -->
+  <dialog id="detail-dialog">
+    <div class="detail">
+      <img id="detail-front" class="detail-photo" alt="名刺(表)">
+      <img id="detail-back" class="detail-photo" alt="名刺(裏)" hidden>
+      <h2 id="detail-name"></h2>
+      <p id="detail-sub" class="muted"></p>
+      <dl id="detail-fields" class="detail-fields"></dl>
+      <div class="dialog-actions">
+        <button type="button" id="btn-delete" class="danger ghost">削除</button>
+        <button type="button" id="btn-vcard" class="ghost">連絡先に保存</button>
+        <button type="button" id="btn-edit" class="ghost">編集</button>
+        <button type="button" id="btn-close">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 画像拡大 -->
+  <dialog id="photo-dialog" class="photo-dialog">
+    <img id="photo-large" alt="名刺の拡大表示">
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
