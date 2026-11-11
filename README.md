@@ -9,7 +9,15 @@ GitHub Pages で公開している場合は、次のURLをスマホのブラウ�
 
 https://bluecrush0811-nakao.github.io/Meishi-box/
 
-ブラウザの共有メニューから「ホーム画面に追加」をしておくと、アプリのようにアイコンから起動できます。
+### アプリとしてインストールする
+
+- **Android (Chrome)**: 画面上部に出る「インストール」ボタンを押します。
+  出ない場合は、右上のメニュー(︙)→「ホーム画面に追加」→「インストール」。
+- **iPhone (Safari)**: 共有ボタン(□に↑)→「ホーム画面に追加」。
+
+インストールすると、ホーム画面のアイコンから全画面で起動でき、電波のない場所でも開けます。
+
+### 名刺を登録する
 
 1. 右下の「＋」をタップしてカメラで名刺を撮影
 2. 必要なら「文字を読み取る」で氏名・会社名・電話番号などを自動入力
@@ -34,7 +42,10 @@ https://bluecrush0811-nakao.github.io/Meishi-box/
 ## ファイル構成
 
 ```
-├── index.html   # 画面
-├── style.css    # スタイル
-└── app.js       # 撮影・OCR・IndexedDB保存などのロジック
+├── index.html            # 画面
+├── style.css             # スタイル
+├── app.js                # 撮影・OCR・IndexedDB保存などのロジック
+├── manifest.webmanifest  # アプリ名・アイコンなどの定義
+├── sw.js                 # オフライン起動用のService Worker
+└── icons/                # アプリアイコン
 ```

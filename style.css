@@ -62,7 +62,22 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); b
   background: var(--primary-dark);
   color: #fff;
 }
-.topbar h1 { margin: 0; font-size: 20px; }
+.topbar { padding-top: calc(12px + env(safe-area-inset-top)); }
+.topbar h1 { margin: 0; font-size: 20px; white-space: nowrap; }
+[hidden] { display: none !important; }
+.topbar button, .topbar .button-like { white-space: nowrap; }
+.install-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--chip);
+  color: var(--primary-dark);
+  font-size: 13px;
+}
+.install-banner span { flex: 1; }
+.install-banner button { white-space: nowrap; font-size: 13px; padding: 6px 12px; }
+.install-banner .ghost { border: none; font-size: 18px; padding: 2px 8px; }
 .topbar-actions { display: flex; gap: 6px; }
 .topbar .ghost { color: #fff; border-color: rgba(255,255,255,.4); font-size: 13px; padding: 6px 10px; }
 .topbar .ghost:hover { background: rgba(255,255,255,.12); }

@@ -540,6 +540,30 @@
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   })();
 
+  // ---------- アプリ化(PWA) ----------
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch((e) => console.warn("SW登録失敗", e));
+    });
+  }
+
+  // Android/PCのChrome系: インストールボタンを表示
+  let installPrompt = null;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    installPrompt = e;
+    $("install-banner").hidden = false;
+  });
+  $("btn-install").addEventListener("click", async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    $("install-banner").hidden = true;
+  });
+  $("btn-install-close").addEventListener("click", () => { $("install-banner").hidden = true; });
+  window.addEventListener("appinstalled", () => { $("install-banner").hidden = true; });
+
   // テスト用に公開
   window.__meishi = { extractFields };
 })();
